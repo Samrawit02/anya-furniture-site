@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --ink: #1C1410;
+    --walnut: #3A2E26;
+    --ivory: #F7F2EA;
+    --gold: #B8895E;
+    --goldLight: #D7AE82;
+    --sand: #D9CCB8;
+    --line: rgba(247, 242, 234, 0.18);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html, body, #root {
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .font-cormorant {
+    font-family: 'Cormorant', serif;
+  }
+}

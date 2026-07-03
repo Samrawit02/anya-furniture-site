@@ -1,0 +1,59 @@
+name: Image optimization and build
+
+on:
+  push:
+    branches: [ 'main' ]
+    paths:
+      - 'public/img/**'
+      - 'src/**'
+  workflow_dispatch: {}
+  schedule:
+    # daily at 03:00 UTC
+    - cron: '0 3 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run image optimizer
+        run: npm run images:optimize
+
+      - name: Commit generated images (if any)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain public/img/generated)" ]; then
+            git add public/img/generated
+            git commit -m "chore: regenerate optimized images [ci skip]" || echo "no commit"
+            git push
+          else
+            echo "No generated image changes"
+          fi
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload generated images artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-images
+          path: public/img/generated
