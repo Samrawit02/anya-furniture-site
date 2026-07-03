@@ -7,7 +7,7 @@ export const PRODUCTS = [
       'img/sofa-ivory-curved.jpg',
       'img/sofa-ivory-curved-top.jpg',
       'img/sofa-ivory-curved-alt-top.jpg',
-      'img/sofa-ivory-curved-alt-back.jpg'
+      // 'img/sofa-ivory-curved-alt-back.jpg'
     ],
     desc: 'A gently curved sofa designed for open-plan living rooms, with a soft bouclé finish and slim brass-edged side tables built into the arms.',
     dims: 'L 280 × D 110 × H 78 cm',
