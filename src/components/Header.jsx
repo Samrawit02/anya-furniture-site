@@ -2,8 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const overlayRef = useRef(null);
   const previousActiveRef = useRef(null);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 20);
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     function onKey(e) { if (e.key === 'Escape') setOpen(false); }
@@ -65,9 +74,16 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className="fixed w-full z-20 bg-gradient-to-b from-ink/95 to-transparent py-6 transition">
+    <header className={`fixed w-full z-20 transition-all duration-300 ${scrolled ? 'bg-ink/95 backdrop-blur py-4 shadow-md' : 'bg-gradient-to-b from-ink/95 to-transparent py-6'}`}>
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        <a href="#top" className="text-2xl font-cormorant">Anya <span className="italic text-goldLight">Furniture</span></a>
+          {/* Logo */}
+          <a href="#top" aria-label="Anya Furniture — Home" style={{ display:'flex', alignItems:'center' }}>
+            <img
+              src="/img/logo-white.png"
+              alt="Anya Furniture"
+              style={{ height: scrolled ? 44 : 52, width:'auto', transition:'height 0.3s' }}
+            />
+          </a>
 
         <nav aria-label="Primary navigation" className="hidden md:block">
           <ul className="flex gap-10 text-sm text-sand">
@@ -83,7 +99,7 @@ export default function Header() {
 
           <button
             type="button"
-            className="md:hidden p-2 rounded focus-visible:outline-2 focus-visible:outline-goldLight"
+            className="md:hidden text-goldLight p-2 rounded focus-visible:outline-2 focus-visible:outline-goldLight"
             aria-controls="mobile-nav"
             aria-expanded={open}
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -113,8 +129,14 @@ export default function Header() {
       >
         <div className="max-w-4xl mx-auto px-6">
           <div className="flex items-center justify-between mb-8">
-            <a href="#top" className="text-xl font-cormorant">Anya <span className="italic text-goldLight">Furniture</span></a>
-            <button type="button" className="p-2 rounded focus-visible:outline-2 focus-visible:outline-goldLight" onClick={() => setOpen(false)} aria-label="Close menu">
+            <a href="#top" aria-label="Anya Furniture — Home" style={{ display:'flex', alignItems:'center' }}>
+              <img
+                src="/img/logo-white.png"
+                alt="Anya Furniture"
+                style={{ height: 44, width:'auto' }}
+              />
+            </a>
+            <button type="button" className="p-2 text-goldLight rounded focus-visible:outline-2 focus-visible:outline-goldLight" onClick={() => setOpen(false)} aria-label="Close menu">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -122,7 +144,7 @@ export default function Header() {
           </div>
 
           <nav aria-label="Mobile navigation">
-            <ul className="flex flex-col gap-6 text-lg">
+            <ul className="flex flex-col gap-6 text-lg  text-goldLight">
               <li><a href="#collections" onClick={() => setOpen(false)}>Collections</a></li>
               <li><a href="#catalog" onClick={() => setOpen(false)}>Catalog</a></li>
               <li><a href="#why" onClick={() => setOpen(false)}>Why Anya</a></li>

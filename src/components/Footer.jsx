@@ -16,8 +16,12 @@ export default function Footer({ onFilterChange }) {
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pb-8 border-b border-line">
           <div>
-            <div className="text-xl font-cormorant">Anya <span className="text-goldLight italic">Furniture</span></div>
-            <p className="text-sand mt-3">Imported luxury furniture from China and Turkey, curated for homes in Addis Ababa.</p>
+            <a href="#top" aria-label="Anya Furniture — Home" style={{ display:'inline-block', marginBottom:18 }}>
+              <img src="/img/logo-gold.png" alt="Anya Furniture" style={{ height:72, width:'auto' }} />
+            </a>
+            <p style={{ fontSize:'0.88rem', color:'#D9CCB8', lineHeight:1.8 }}>
+              Imported luxury furniture from China and Turkey,<br />curated for homes in Addis Ababa.
+            </p>
           </div>
           <div>
             <h4 className="text-goldLight uppercase text-sm mb-3">Explore</h4>
